@@ -16,8 +16,8 @@
     <Description>Dual-mode Gmail integration tool supporting both direct CLI operations and MCP server mode for AI assistants. Search messages, read emails, and download attachments via command line or Model Context Protocol.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <RepositoryUrl>https://github.com/yourusername/dotnet-gmail-mcp</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/yourusername/dotnet-gmail-mcp</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/brendankowitz/dotnet-gmail-mcp</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/brendankowitz/dotnet-gmail-mcp</PackageProjectUrl>
     <PackageTags>gmail;mcp;model-context-protocol;cli;ai;oauth2;dotnet-tool;claude</PackageTags>
   </PropertyGroup>
 
@@ -39,5 +39,16 @@
     <None Include="..\..\README.md" Pack="true" PackagePath="\" />
     <None Include="..\..\.mcp\server.json" Pack="true" PackagePath="/.mcp/" />
   </ItemGroup>
+
+  <!-- Update server.json version before packing -->
+  <Target Name="UpdateServerJsonVersion" BeforeTargets="GenerateNuspec">
+    <PropertyGroup>
+      <ServerJsonPath>$(MSBuildProjectDirectory)\..\..\.mcp\server.json</ServerJsonPath>
+      <ServerJsonContent>$([System.IO.File]::ReadAllText($(ServerJsonPath)))</ServerJsonContent>
+      <!-- Replace version placeholders with actual version -->
+      <ServerJsonContent>$(ServerJsonContent.Replace('"version": "0.0.0"', '"version": "$(PackageVersion)"'))</ServerJsonContent>
+    </PropertyGroup>
+    <WriteLinesToFile File="$(ServerJsonPath)" Lines="$(ServerJsonContent)" Overwrite="true" />
+  </Target>
 
 </Project>

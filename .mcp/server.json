@@ -2,13 +2,13 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-10-17/server.schema.json",
   "description": "Dual-mode Gmail integration tool supporting both direct CLI operations and MCP server mode for AI assistants. Search messages, read emails, and download attachments.",
   "name": "io.github.brendankowitz/dotnet-gmail-mcp",
-  "version": "0.0.4",
+  "version": "0.0.0",
   "packages": [
     {
       "registryType": "nuget",
       "registryBaseUrl": "https://api.nuget.org",
       "identifier": "GmailMcp",
-      "version": "0.0.4",
+      "version": "0.0.0",
       "transport": {
         "type": "stdio"
       },
