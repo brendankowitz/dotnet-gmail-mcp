@@ -11,11 +11,13 @@
 
     <!-- Package Metadata -->
     <PackageId>GmailMcp</PackageId>
-    <Version>1.0.0</Version>
+    <PackageType>McpServer</PackageType>
     <Authors>Gmail MCP Contributors</Authors>
     <Description>Dual-mode Gmail integration tool supporting both direct CLI operations and MCP server mode for AI assistants. Search messages, read emails, and download attachments via command line or Model Context Protocol.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/yourusername/dotnet-gmail-mcp</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/yourusername/dotnet-gmail-mcp</PackageProjectUrl>
     <PackageTags>gmail;mcp;model-context-protocol;cli;ai;oauth2;dotnet-tool;claude</PackageTags>
   </PropertyGroup>
 
