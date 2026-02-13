@@ -9,10 +9,6 @@
 
 ---
 
-## 🚧 Status
-
-This project is under active development. The core functionality is operational, but APIs and features may evolve.
-
 ## Overview
 
 Gmail MCP Server is a versatile .NET global tool that bridges your Gmail account with both human users and AI assistants. It provides two distinct modes of operation:
