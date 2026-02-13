@@ -49,10 +49,10 @@ jobs:
         run: dotnet restore src/GmailMcp/GmailMcp.csproj
 
       - name: Build
-        run: dotnet build src/GmailMcp/GmailMcp.csproj --configuration ${{ inputs.configuration }} --no-restore /p:Version=${{ steps.gitversion.outputs.nuGetVersion }}
+        run: dotnet build src/GmailMcp/GmailMcp.csproj --configuration ${{ inputs.configuration }} --no-restore
 
       - name: Pack
-        run: dotnet pack src/GmailMcp/GmailMcp.csproj --configuration ${{ inputs.configuration }} --no-build --output ./packages /p:PackageVersion=${{ steps.gitversion.outputs.nuGetVersion }}
+        run: dotnet pack src/GmailMcp/GmailMcp.csproj --configuration ${{ inputs.configuration }} --no-build --output ./packages
 
       - name: Upload NuGet package
         uses: actions/upload-artifact@v4

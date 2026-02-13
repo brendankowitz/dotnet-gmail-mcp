@@ -48,7 +48,7 @@ jobs:
           useConfigFile: true
 
       - name: Pack NuGet package
-        run: dotnet pack src/GmailMcp/GmailMcp.csproj --configuration Release --output ./packages /p:PackageVersion=${{ steps.gitversion.outputs.nuGetVersion }}
+        run: dotnet pack src/GmailMcp/GmailMcp.csproj --configuration Release --output ./packages
 
       - name: Push to NuGet
         run: dotnet nuget push ./packages/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
