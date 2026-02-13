@@ -125,6 +125,177 @@ Claude should confirm it has access to Gmail tools like `search_messages`, `read
 
 ---
 
+## Visual Studio Code Configuration
+
+Visual Studio Code with GitHub Copilot can automatically discover and configure MCP servers published to NuGet with the required `server.json` metadata.
+
+### Prerequisites
+
+- [Visual Studio Code](https://code.visualstudio.com/)
+- [GitHub Copilot extension](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot)
+- [.NET 10 SDK or higher](https://dotnet.microsoft.com/download/dotnet) (required for `dnx` command)
+
+### Automatic Configuration from NuGet
+
+1. **Search for the package on NuGet.org:**
+
+   Visit [https://www.nuget.org/packages/GmailMcp](https://www.nuget.org/packages/GmailMcp)
+
+2. **Copy the MCP Server configuration:**
+
+   On the package page, click the **"MCP Server"** tab. You'll see automatically generated configuration JSON like this:
+
+   ```json
+   {
+     "inputs": [],
+     "servers": {
+       "GmailMcp": {
+         "type": "stdio",
+         "command": "dnx",
+         "args": [
+           "GmailMcp@0.0.5",
+           "--yes"
+         ]
+       }
+     }
+   }
+   ```
+
+   The `dnx` command (DotNet eXecute) is a .NET global tool runner that automatically downloads and runs .NET tools from NuGet.
+
+3. **Add to VS Code configuration:**
+
+   You have two options for configuration scope:
+
+   **Option A: Workspace-specific (recommended for project-based work)**
+
+   - Create a `.vscode` folder in your workspace root (if it doesn't exist)
+   - Create or edit `.vscode/mcp.json`
+   - Paste the copied JSON configuration
+
+   **Option B: Global (available across all workspaces)**
+
+   - Open VS Code Command Palette (Ctrl+Shift+P or Cmd+Shift+P)
+   - Type "MCP: Add Server" and select it
+   - Choose "Global" as the configuration target
+   - Select "stdio" as the server type
+   - Enter command: `dnx`
+   - Enter args: `GmailMcp@0.0.5 --yes`
+   - Enter server ID: `GmailMcp`
+
+4. **Verify the configuration:**
+
+   Your `.vscode/mcp.json` should look like this:
+
+   ```json
+   {
+     "inputs": [],
+     "servers": {
+       "GmailMcp": {
+         "type": "stdio",
+         "command": "dnx",
+         "args": [
+           "GmailMcp@0.0.5",
+           "--yes"
+         ]
+       }
+     }
+   }
+   ```
+
+5. **Reload VS Code:**
+
+   After saving the configuration, reload the VS Code window:
+   - Open Command Palette (Ctrl+Shift+P or Cmd+Shift+P)
+   - Type "Developer: Reload Window" and select it
+
+6. **Verify the MCP server is loaded:**
+
+   - Open GitHub Copilot Chat
+   - Switch to **Agent** mode (click the mode selector at the top)
+   - Click the **"Select tools"** icon (wrench icon)
+   - You should see "GmailMcp" listed with its available tools:
+     - `search_messages`
+     - `read_message`
+     - `download_attachment`
+
+### Manual Configuration (Advanced)
+
+If you prefer to configure manually without using `dnx`, you can point directly to a locally installed tool:
+
+```json
+{
+  "servers": {
+    "GmailMcp": {
+      "type": "stdio",
+      "command": "dotnet-gmail",
+      "args": ["mcp"]
+    }
+  }
+}
+```
+
+**Requirements for manual configuration:**
+- The `dotnet-gmail` tool must be installed globally: `dotnet tool install -g GmailMcp`
+- The .NET tools directory must be in your PATH
+
+### Testing the Integration
+
+Once configured, test the MCP server with GitHub Copilot:
+
+1. Open GitHub Copilot Chat in VS Code
+2. Switch to **Agent** mode
+3. Try these example prompts:
+
+```
+Search my Gmail for unread messages from my boss
+```
+
+```
+Show me the latest email with "invoice" in the subject
+```
+
+```
+Read the message with ID 18d4f2a3b5c6e7f8
+```
+
+GitHub Copilot will request permission to run the Gmail tools. You can:
+- **Continue** - Allow for this prompt only
+- **Current session** - Always allow in the current session
+- **Current workspace** - Always allow for the current workspace
+- **Always allow** - Always allow without asking
+
+### Troubleshooting VS Code
+
+**Error: "The command 'dnx' needed to run GmailMcp was not found"**
+
+Solution: Install .NET 10 SDK or higher, which includes the `dnx` command.
+- Download from: https://dotnet.microsoft.com/download/dotnet/10.0
+- After installation, restart VS Code
+
+**Error: "Server failed to start"**
+
+Solutions:
+1. Check that you've authenticated: Run `dotnet-gmail auth` from terminal
+2. Verify credentials exist in `~/.gmail-mcp/`
+3. Check VS Code Output panel (View → Output → GitHub Copilot Chat) for detailed errors
+
+**MCP server not appearing in tools list**
+
+Solutions:
+1. Verify `mcp.json` is in the correct location (`.vscode/mcp.json` for workspace)
+2. Reload VS Code window (Command Palette → "Developer: Reload Window")
+3. Check that the `mcp.json` syntax is valid JSON (no trailing commas, proper quotes)
+
+**GitHub Copilot doesn't use the tools**
+
+Solutions:
+1. Verify you're in **Agent** mode (not regular Chat mode)
+2. Check that the tools are enabled in the "Select tools" menu
+3. Explicitly reference the tool by name: `Using #search_messages, find my unread emails`
+
+---
+
 ## Available MCP Tools
 
 ### search_messages
