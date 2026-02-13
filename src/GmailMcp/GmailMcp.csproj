@@ -37,6 +37,7 @@
 
   <ItemGroup>
     <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\.mcp\server.json" Pack="true" PackagePath="/.mcp/" />
   </ItemGroup>
 
 </Project>
