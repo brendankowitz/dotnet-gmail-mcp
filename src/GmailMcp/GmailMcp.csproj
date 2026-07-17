@@ -28,7 +28,7 @@
     <PackageReference Include="Google.Apis.Auth" Version="1.70.0" />
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
     <PackageReference Include="Polly" Version="8.5.0" />
-    <PackageReference Include="AngleSharp" Version="1.1.2" />
+    <PackageReference Include="AngleSharp" Version="1.5.0" />
     <PackageReference Include="GitVersion.MsBuild" Version="6.0.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
